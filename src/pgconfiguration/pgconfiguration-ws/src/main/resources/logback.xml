@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<configuration>
+    <appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>null</key>
+            <defaultValue>unknown</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+                <file>pgconfiguration-ws.log</file>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>%date\t%level\t[%thread] %logger{10} [%file:%line] %msg%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+    <root level="warn">
+        <appender-ref ref="SIFT"/>
+    </root>
+</configuration>
