@@ -4,11 +4,9 @@
 
 package es.nosys.postgresql.pgconfiguration.ws;
 
-import com.sun.jersey.spi.container.servlet.ServletContainer;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.slf4j.bridge.SLF4JBridgeHandler;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Created: 12/14/13
@@ -16,41 +14,42 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
  * @author Álvaro Hernández Tortosa <aht@nosys.es>
  */
 public class Main {
-    public static final int DEFAULT_PORT = 8543;
+    private static void usage() {
+        System.err.println("\nUsage:\tjava -jar <pgconfiguration-resources-x.yz.jar> [PGDATA]\n");
+        System.err.println("PGDATA is the (relative or absolute) directory containing the postgresql.conf file");
+        System.err.println("(defaults to the current directory if not specified).\n");
+    }
 
-    private static final String WS_PACKAGE = Main.class.getPackage().getName();
+    private static void exitWithError(String error, int exitCode) {
+        System.err.println(error);
+        usage();
+        System.exit(exitCode);
+    }
+
+    private static boolean pgDataIsValid(Path pgData) {
+        return Files.isWritable(pgData.resolve(ServiceConfiguration.POSTGRESQL_CONF));
+    }
 
     public static void main(String[] args) {
-        Server server = new Server(DEFAULT_PORT);
-
-        // Configure servlet environment
-        ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        servletContextHandler.setContextPath("/");
-        server.setHandler(servletContextHandler);
-
-        // Jersey uses java.util.logging - bridge to slf4
-        SLF4JBridgeHandler.removeHandlersForRootLogger();
-        SLF4JBridgeHandler.install();
-
-        // Configure jersey environment. Load REST WSs
-        ServletHolder holder = new ServletHolder(new ServletContainer());
-        holder.setInitParameter(
-                "com.sun.jersey.config.property.packages", WS_PACKAGE + ";" + "org.codehaus.jackson.jaxrs"
-        );
-        servletContextHandler.addServlet(holder, "/*");
-
-        // Launch server and join it to the main thread
-        try {
-            server.start();
-        } catch (Exception e) {
-            System.err.println("Server failed to start. Check logs for more information");
-            System.exit(1);
+        Path pgData = Paths.get(args.length == 0 ? "" : args[0]);
+        if(! Files.exists(pgData)) {
+            exitWithError("Directory " + pgData.toAbsolutePath() + " does not exist", 1);
+        }
+        if(! pgDataIsValid(pgData)) {
+            exitWithError(
+                    "Directory " + pgData.toAbsolutePath() + " does not contain the file "
+                            + ServiceConfiguration.POSTGRESQL_CONF + " or it's not writable"
+                    , 2
+            );
         }
 
+        PGConfigurationServer pgConfigurationServer = new PGConfigurationServer(pgData);
+
         try {
-            server.join();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();     // Restore interrupt status
+            pgConfigurationServer.run();
+        } catch (Exception e) {
+            System.err.println("Server failed to start. Check the logs for more information");
+            System.exit(1);
         }
     }
 }

@@ -1,0 +1,2032 @@
+{
+    "postgresqlconf": [
+        {
+            "param": "autovacuum",
+            "value": "FALSE",
+            "context": "sighup",
+            "category": "Autovacuum",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Starts the autovacuum subprocess."
+        },
+        {
+            "param": "ident_file",
+            "context": "postmaster",
+            "category": "File Locations",
+            "vartype": "STRING",
+            "description": "Sets the server's \"ident\" configuration file."
+        },
+        {
+            "param": "IntervalStyle",
+            "value": "postgres",
+            "context": "user",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "ENUM",
+            "enumvalues": [ "postgres", "postgres_verbose", "sql_standard", "iso_8601" ],
+            "defaultvalue": "postgres",
+            "description": "Sets the display format for interval values."
+        },
+        {
+            "param": "log_truncate_on_rotation",
+            "value": "FALSE",
+            "context": "sighup",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Truncate existing log files of same name during log rotation."
+        },
+        {
+            "param": "join_collapse_limit",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Other Planner Options",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "2147483647",
+            "defaultvalue": "8",
+            "description": "Sets the FROM-list size beyond which JOIN constructs are not flattened.",
+            "extra": "The planner will flatten explicit JOIN constructs into lists of FROM items whenever a list of no more than this many items would result."
+        },
+        {
+            "param": "krb_caseins_users",
+            "value": "FALSE",
+            "context": "sighup",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Sets whether Kerberos and GSSAPI user names should be treated as case-insensitive."
+        },
+        {
+            "param": "krb_server_keyfile",
+            "value": "FILE:/etc/postgresql-common/krb5.keytab",
+            "context": "sighup",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "STRING",
+            "description": "Sets the location of the Kerberos server key file."
+        },
+        {
+            "param": "krb_srvname",
+            "value": "postgres",
+            "context": "sighup",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "STRING",
+            "defaultvalue": "postgres",
+            "description": "Sets the name of the Kerberos service."
+        },
+        {
+            "param": "lc_messages",
+            "context": "superuser",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "STRING",
+            "defaultvalue": "en_US.UTF-8",
+            "description": "Sets the language in which messages are displayed."
+        },
+        {
+            "param": "lc_monetary",
+            "value": "C",
+            "context": "user",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "STRING",
+            "defaultvalue": "en_US.UTF-8",
+            "description": "Sets the locale for formatting monetary amounts."
+        },
+        {
+            "param": "lc_time",
+            "value": "C",
+            "context": "user",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "STRING",
+            "defaultvalue": "en_US.UTF-8",
+            "description": "Sets the locale for formatting date and time values."
+        },
+        {
+            "param": "listen_addresses",
+            "value": "localhost",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Connection Settings",
+            "vartype": "STRING",
+            "defaultvalue": "localhost",
+            "description": "Sets the host name or IP address(es) to listen to."
+        },
+        {
+            "param": "lo_compat_privileges",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Version and Platform Compatibility / Previous PostgreSQL Versions",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Enables backward compatibility mode for privilege checks on large objects.",
+            "extra": "Skips privilege checks when reading or modifying large objects, for compatibility with PostgreSQL releases prior to 9.0."
+        },
+        {
+            "param": "local_preload_libraries",
+            "context": "backend",
+            "category": "Client Connection Defaults / Other Defaults",
+            "vartype": "STRING",
+            "description": "Lists shared libraries to preload into each backend."
+        },
+        {
+            "param": "lock_timeout",
+            "value": "0",
+            "unit": "ms",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "0",
+            "description": "Sets the maximum allowed duration of any wait for a lock.",
+            "extra": "A value of 0 turns off the timeout."
+        },
+        {
+            "param": "log_autovacuum_min_duration",
+            "value": "0",
+            "unit": "ms",
+            "context": "sighup",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "INTEGER",
+            "minval": "-1",
+            "maxval": "2147483647",
+            "defaultvalue": "-1",
+            "description": "Sets the minimum execution time above which autovacuum actions will be logged.",
+            "extra": "Zero prints all actions. -1 turns autovacuum logging off."
+        },
+        {
+            "param": "log_checkpoints",
+            "value": "FALSE",
+            "context": "sighup",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Logs each checkpoint."
+        },
+        {
+            "param": "log_connections",
+            "value": "FALSE",
+            "context": "backend",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Logs each successful connection."
+        },
+        {
+            "param": "log_destination",
+            "value": "stderr",
+            "context": "sighup",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "STRING",
+            "defaultvalue": "stderr",
+            "description": "Sets the destination for server log output.",
+            "extra": "Valid values are combinations of \"stderr\", \"syslog\", \"csvlog\", and \"eventlog\", depending on the platform."
+        },
+        {
+            "param": "log_directory",
+            "value": "pg_log",
+            "context": "sighup",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "STRING",
+            "description": "Sets the destination directory for log files.",
+            "extra": "Can be specified as relative to the data directory or as absolute path."
+        },
+        {
+            "param": "log_disconnections",
+            "value": "FALSE",
+            "context": "backend",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Logs end of a session, including duration."
+        },
+        {
+            "param": "log_duration",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Logs the duration of each completed SQL statement."
+        },
+        {
+            "param": "log_error_verbosity",
+            "value": "default",
+            "context": "superuser",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "ENUM",
+            "enumvalues": [ "terse", "default", "verbose" ],
+            "defaultvalue": "default",
+            "description": "Sets the verbosity of logged messages."
+        },
+        {
+            "param": "log_executor_stats",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Statistics / Monitoring",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Writes executor performance statistics to the server log."
+        },
+        {
+            "param": "log_file_mode",
+            "value": "0",
+            "context": "sighup",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "511",
+            "defaultvalue": "384",
+            "description": "Sets the file permissions for log files.",
+            "extra": "The parameter value is expected to be a numeric mode specification in the form accepted by the chmod and umask system calls. (To use the customary octal format the number must start with a 0 (zero).)"
+        },
+        {
+            "param": "log_filename",
+            "value": "postgresql-%Y-%m-%d_%H%M%S.log",
+            "context": "sighup",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "STRING",
+            "description": "Sets the file name pattern for log files."
+        },
+        {
+            "param": "log_hostname",
+            "value": "FALSE",
+            "context": "sighup",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Logs the host name in the connection logs.",
+            "extra": "By default, connection logs only show the IP address of the connecting host. If you want them to show the host name you can turn this on, but depending on your host name resolution setup it might impose a non-negligible performance penalty."
+        },
+        {
+            "param": "log_line_prefix",
+            "context": "sighup",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "STRING",
+            "defaultvalue": "%t ",
+            "description": "Controls information prefixed to each log line.",
+            "extra": "If blank, no prefix is used."
+        },
+        {
+            "param": "log_lock_waits",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Logs long lock waits."
+        },
+        {
+            "param": "log_min_duration_statement",
+            "value": "0",
+            "unit": "ms",
+            "context": "superuser",
+            "category": "Reporting and Logging / When to Log",
+            "vartype": "INTEGER",
+            "minval": "-1",
+            "maxval": "2147483647",
+            "defaultvalue": "-1",
+            "description": "Sets the minimum execution time above which statements will be logged.",
+            "extra": "Zero prints all queries. -1 turns this feature off."
+        },
+        {
+            "param": "log_min_error_statement",
+            "value": "error",
+            "context": "superuser",
+            "category": "Reporting and Logging / When to Log",
+            "vartype": "ENUM",
+            "enumvalues": [ "debug5", "debug4", "debug3", "debug2", "debug1", "info", "notice", "warning", "error", "log", "fatal", "panic" ],
+            "defaultvalue": "error",
+            "description": "Causes all statements generating error at or above this level to be logged.",
+            "extra": "Each level includes all the levels that follow it. The later the level, the fewer messages are sent."
+        },
+        {
+            "param": "log_min_messages",
+            "value": "warning",
+            "context": "superuser",
+            "category": "Reporting and Logging / When to Log",
+            "vartype": "ENUM",
+            "enumvalues": [ "debug5", "debug4", "debug3", "debug2", "debug1", "info", "notice", "warning", "error", "log", "fatal", "panic" ],
+            "defaultvalue": "warning",
+            "description": "Sets the message levels that are logged.",
+            "extra": "Each level includes all the levels that follow it. The later the level, the fewer messages are sent."
+        },
+        {
+            "param": "log_parser_stats",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Statistics / Monitoring",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Writes parser performance statistics to the server log."
+        },
+        {
+            "param": "log_planner_stats",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Statistics / Monitoring",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Writes planner performance statistics to the server log."
+        },
+        {
+            "param": "log_rotation_age",
+            "value": "0",
+            "unit": "min",
+            "context": "sighup",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "35791394",
+            "defaultvalue": "1440",
+            "description": "Automatic log file rotation will occur after N minutes."
+        },
+        {
+            "param": "archive_command",
+            "context": "sighup",
+            "category": "Write-Ahead Log / Archiving",
+            "vartype": "STRING",
+            "description": "Sets the shell command that will be called to archive a WAL file."
+        },
+        {
+            "param": "archive_mode",
+            "value": "FALSE",
+            "context": "postmaster",
+            "category": "Write-Ahead Log / Archiving",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Allows archiving of WAL files using archive_command."
+        },
+        {
+            "param": "archive_timeout",
+            "value": "0",
+            "unit": "s",
+            "context": "sighup",
+            "category": "Write-Ahead Log / Archiving",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "1073741823",
+            "defaultvalue": "0",
+            "description": "Forces a switch to the next xlog file if a new file has not been started within N seconds."
+        },
+        {
+            "param": "array_nulls",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Version and Platform Compatibility / Previous PostgreSQL Versions",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enable input of NULL elements in arrays.",
+            "extra": "When turned on, unquoted NULL in an array input value means a null value; otherwise it is taken literally."
+        },
+        {
+            "param": "authentication_timeout",
+            "value": "0",
+            "unit": "s",
+            "context": "sighup",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "600",
+            "defaultvalue": "60",
+            "description": "Sets the maximum allowed time to complete client authentication."
+        },
+        {
+            "param": "data_directory",
+            "context": "postmaster",
+            "category": "File Locations",
+            "vartype": "STRING",
+            "description": "Sets the server's data directory."
+        },
+        {
+            "param": "default_with_oids",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Version and Platform Compatibility / Previous PostgreSQL Versions",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Create new tables with OIDs by default."
+        },
+        {
+            "param": "lc_numeric",
+            "value": "C",
+            "context": "user",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "STRING",
+            "defaultvalue": "en_US.UTF-8",
+            "description": "Sets the locale for formatting numbers."
+        },
+        {
+            "param": "autovacuum_analyze_scale_factor",
+            "value": "0",
+            "context": "sighup",
+            "category": "Autovacuum",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "100",
+            "defaultvalue": "0.1",
+            "description": "Number of tuple inserts, updates, or deletes prior to analyze as a fraction of reltuples."
+        },
+        {
+            "param": "autovacuum_naptime",
+            "value": "0",
+            "unit": "s",
+            "context": "sighup",
+            "category": "Autovacuum",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "2147483",
+            "defaultvalue": "60",
+            "description": "Time to sleep between autovacuum runs."
+        },
+        {
+            "param": "autovacuum_analyze_threshold",
+            "value": "0",
+            "context": "sighup",
+            "category": "Autovacuum",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "50",
+            "description": "Minimum number of tuple inserts, updates, or deletes prior to analyze."
+        },
+        {
+            "param": "autovacuum_freeze_max_age",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Autovacuum",
+            "vartype": "INTEGER",
+            "minval": "100000000",
+            "maxval": "2000000000",
+            "defaultvalue": "200000000",
+            "description": "Age at which to autovacuum a table to prevent transaction ID wraparound."
+        },
+        {
+            "param": "autovacuum_max_workers",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Autovacuum",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "8388607",
+            "defaultvalue": "3",
+            "description": "Sets the maximum number of simultaneously running autovacuum worker processes."
+        },
+        {
+            "param": "autovacuum_vacuum_cost_delay",
+            "value": "0",
+            "unit": "ms",
+            "context": "sighup",
+            "category": "Autovacuum",
+            "vartype": "INTEGER",
+            "minval": "-1",
+            "maxval": "100",
+            "defaultvalue": "20",
+            "description": "Vacuum cost delay in milliseconds, for autovacuum."
+        },
+        {
+            "param": "autovacuum_vacuum_cost_limit",
+            "value": "0",
+            "context": "sighup",
+            "category": "Autovacuum",
+            "vartype": "INTEGER",
+            "minval": "-1",
+            "maxval": "10000",
+            "defaultvalue": "-1",
+            "description": "Vacuum cost amount available before napping, for autovacuum."
+        },
+        {
+            "param": "autovacuum_vacuum_scale_factor",
+            "value": "0",
+            "context": "sighup",
+            "category": "Autovacuum",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "100",
+            "defaultvalue": "0.2",
+            "description": "Number of tuple updates or deletes prior to vacuum as a fraction of reltuples."
+        },
+        {
+            "param": "autovacuum_vacuum_threshold",
+            "value": "0",
+            "context": "sighup",
+            "category": "Autovacuum",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "50",
+            "description": "Minimum number of tuple updates or deletes prior to vacuum."
+        },
+        {
+            "param": "backslash_quote",
+            "value": "safe_encoding",
+            "context": "user",
+            "category": "Version and Platform Compatibility / Previous PostgreSQL Versions",
+            "vartype": "ENUM",
+            "enumvalues": [ "safe_encoding", "on", "off" ],
+            "defaultvalue": "safe_encoding",
+            "description": "Sets whether \"'\" is allowed in string literals."
+        },
+        {
+            "param": "bgwriter_delay",
+            "value": "0",
+            "unit": "ms",
+            "context": "sighup",
+            "category": "Resource Usage / Background Writer",
+            "vartype": "INTEGER",
+            "minval": "10",
+            "maxval": "10000",
+            "defaultvalue": "200",
+            "description": "Background writer sleep time between rounds."
+        },
+        {
+            "param": "bgwriter_lru_maxpages",
+            "value": "0",
+            "context": "sighup",
+            "category": "Resource Usage / Background Writer",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "1000",
+            "defaultvalue": "100",
+            "description": "Background writer maximum number of LRU pages to flush per round."
+        },
+        {
+            "param": "bgwriter_lru_multiplier",
+            "value": "0",
+            "context": "sighup",
+            "category": "Resource Usage / Background Writer",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "10",
+            "defaultvalue": "2",
+            "description": "Multiple of the average buffer usage to free per round."
+        },
+        {
+            "param": "bonjour",
+            "value": "FALSE",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Connection Settings",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Enables advertising the server via Bonjour."
+        },
+        {
+            "param": "bonjour_name",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Connection Settings",
+            "vartype": "STRING",
+            "description": "Sets the Bonjour service name."
+        },
+        {
+            "param": "bytea_output",
+            "value": "hex",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "ENUM",
+            "enumvalues": [ "escape", "hex" ],
+            "defaultvalue": "hex",
+            "description": "Sets the output format for bytea."
+        },
+        {
+            "param": "check_function_bodies",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Check function bodies during CREATE FUNCTION."
+        },
+        {
+            "param": "checkpoint_completion_target",
+            "value": "0",
+            "context": "sighup",
+            "category": "Write-Ahead Log / Checkpoints",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "1",
+            "defaultvalue": "0.5",
+            "description": "Time spent flushing dirty buffers during checkpoint, as fraction of checkpoint interval."
+        },
+        {
+            "param": "checkpoint_segments",
+            "value": "0",
+            "context": "sighup",
+            "category": "Write-Ahead Log / Checkpoints",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "2147483647",
+            "defaultvalue": "3",
+            "description": "Sets the maximum distance in log segments between automatic WAL checkpoints."
+        },
+        {
+            "param": "checkpoint_timeout",
+            "value": "0",
+            "unit": "s",
+            "context": "sighup",
+            "category": "Write-Ahead Log / Checkpoints",
+            "vartype": "INTEGER",
+            "minval": "30",
+            "maxval": "3600",
+            "defaultvalue": "300",
+            "description": "Sets the maximum time between automatic WAL checkpoints."
+        },
+        {
+            "param": "checkpoint_warning",
+            "value": "0",
+            "unit": "s",
+            "context": "sighup",
+            "category": "Write-Ahead Log / Checkpoints",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "30",
+            "description": "Enables warnings if checkpoint segments are filled more frequently than this.",
+            "extra": "Write a message to the server log if checkpoints caused by the filling of checkpoint segment files happens more frequently than this number of seconds. Zero turns off the warning."
+        },
+        {
+            "param": "client_encoding",
+            "value": "SQL_ASCII",
+            "context": "user",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "STRING",
+            "defaultvalue": "UTF8",
+            "description": "Sets the client's character set encoding."
+        },
+        {
+            "param": "client_min_messages",
+            "value": "notice",
+            "context": "user",
+            "category": "Reporting and Logging / When to Log",
+            "vartype": "ENUM",
+            "enumvalues": [ "debug5", "debug4", "debug3", "debug2", "debug1", "log", "notice", "warning", "error" ],
+            "defaultvalue": "notice",
+            "description": "Sets the message levels that are sent to the client.",
+            "extra": "Each level includes all the levels that follow it. The later the level, the fewer messages are sent."
+        },
+        {
+            "param": "commit_delay",
+            "value": "0",
+            "context": "superuser",
+            "category": "Write-Ahead Log / Settings",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "100000",
+            "defaultvalue": "0",
+            "description": "Sets the delay in microseconds between transaction commit and flushing WAL to disk."
+        },
+        {
+            "param": "commit_siblings",
+            "value": "0",
+            "context": "user",
+            "category": "Write-Ahead Log / Settings",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "1000",
+            "defaultvalue": "5",
+            "description": "Sets the minimum concurrent open transactions before performing commit_delay."
+        },
+        {
+            "param": "constraint_exclusion",
+            "value": "partition",
+            "context": "user",
+            "category": "Query Tuning / Other Planner Options",
+            "vartype": "ENUM",
+            "enumvalues": [ "partition", "on", "off" ],
+            "defaultvalue": "partition",
+            "description": "Enables the planner to use constraints to optimize queries.",
+            "extra": "Table scans will be skipped if their constraints guarantee that no rows match the query."
+        },
+        {
+            "param": "cpu_index_tuple_cost",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Planner Cost Constants",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "1.79769e+308",
+            "defaultvalue": "0.005",
+            "description": "Sets the planner's estimate of the cost of processing each index entry during an index scan."
+        },
+        {
+            "param": "cpu_operator_cost",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Planner Cost Constants",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "1.79769e+308",
+            "defaultvalue": "0.0025",
+            "description": "Sets the planner's estimate of the cost of processing each operator or function call."
+        },
+        {
+            "param": "cpu_tuple_cost",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Planner Cost Constants",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "1.79769e+308",
+            "defaultvalue": "0.01",
+            "description": "Sets the planner's estimate of the cost of processing each tuple (row)."
+        },
+        {
+            "param": "cursor_tuple_fraction",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Other Planner Options",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "1",
+            "defaultvalue": "0.1",
+            "description": "Sets the planner's estimate of the fraction of a cursor's rows that will be retrieved."
+        },
+        {
+            "param": "DateStyle",
+            "value": "ISO, MDY",
+            "context": "user",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "STRING",
+            "defaultvalue": "ISO, MDY",
+            "description": "Sets the display format for date and time values.",
+            "extra": "Also controls interpretation of ambiguous date inputs."
+        },
+        {
+            "param": "db_user_namespace",
+            "value": "FALSE",
+            "context": "sighup",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Enables per-database user names."
+        },
+        {
+            "param": "deadlock_timeout",
+            "value": "0",
+            "unit": "ms",
+            "context": "superuser",
+            "category": "Lock Management",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "2147483647",
+            "defaultvalue": "1000",
+            "description": "Sets the time to wait on a lock before checking for deadlock."
+        },
+        {
+            "param": "debug_pretty_print",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Indents parse and plan tree displays."
+        },
+        {
+            "param": "debug_print_parse",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Logs each query's parse tree."
+        },
+        {
+            "param": "debug_print_plan",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Logs each query's execution plan."
+        },
+        {
+            "param": "debug_print_rewritten",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Logs each query's rewritten parse tree."
+        },
+        {
+            "param": "hot_standby_feedback",
+            "value": "FALSE",
+            "context": "sighup",
+            "category": "Replication / Standby Servers",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Allows feedback from a hot standby to the primary that will avoid query conflicts."
+        },
+        {
+            "param": "default_statistics_target",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Other Planner Options",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "10000",
+            "defaultvalue": "100",
+            "description": "Sets the default statistics target.",
+            "extra": "This applies to table columns that have not had a column-specific target set via ALTER TABLE SET STATISTICS."
+        },
+        {
+            "param": "default_tablespace",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "STRING",
+            "description": "Sets the default tablespace to create tables and indexes in.",
+            "extra": "An empty string selects the database's default tablespace."
+        },
+        {
+            "param": "default_text_search_config",
+            "value": "pg_catalog.simple",
+            "context": "user",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "STRING",
+            "defaultvalue": "pg_catalog.english",
+            "description": "Sets default text search configuration."
+        },
+        {
+            "param": "default_transaction_deferrable",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Sets the default deferrable status of new transactions."
+        },
+        {
+            "param": "default_transaction_isolation",
+            "value": "read committed",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "ENUM",
+            "enumvalues": [ "serializable", "repeatable read", "read committed", "read uncommitted" ],
+            "defaultvalue": "read committed",
+            "description": "Sets the transaction isolation level of each new transaction."
+        },
+        {
+            "param": "default_transaction_read_only",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Sets the default read-only status of new transactions."
+        },
+        {
+            "param": "dynamic_library_path",
+            "value": "$libdir",
+            "context": "superuser",
+            "category": "Client Connection Defaults / Other Defaults",
+            "vartype": "STRING",
+            "description": "Sets the path for dynamically loadable modules.",
+            "extra": "If a dynamically loadable module needs to be opened and the specified name does not have a directory component (i.e., the name does not contain a slash), the system will search this path for the specified file."
+        },
+        {
+            "param": "effective_cache_size",
+            "value": "0",
+            "unit": "8kB",
+            "context": "user",
+            "category": "Query Tuning / Planner Cost Constants",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "2147483647",
+            "defaultvalue": "16384",
+            "description": "Sets the planner's assumption about the size of the disk cache.",
+            "extra": "That is, the portion of the kernel's disk cache that will be used for PostgreSQL data files. This is measured in disk pages, which are normally 8 kB each."
+        },
+        {
+            "param": "effective_io_concurrency",
+            "value": "0",
+            "context": "user",
+            "category": "Resource Usage / Asynchronous Behavior",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "1000",
+            "defaultvalue": "1",
+            "description": "Number of simultaneous requests that can be handled efficiently by the disk subsystem.",
+            "extra": "For RAID arrays, this should be approximately the number of drive spindles in the array."
+        },
+        {
+            "param": "enable_bitmapscan",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of bitmap-scan plans."
+        },
+        {
+            "param": "enable_hashagg",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of hashed aggregation plans."
+        },
+        {
+            "param": "enable_hashjoin",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of hash join plans."
+        },
+        {
+            "param": "enable_indexonlyscan",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of index-only-scan plans."
+        },
+        {
+            "param": "enable_indexscan",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of index-scan plans."
+        },
+        {
+            "param": "enable_material",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of materialization."
+        },
+        {
+            "param": "enable_mergejoin",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of merge join plans."
+        },
+        {
+            "param": "enable_nestloop",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of nested-loop join plans."
+        },
+        {
+            "param": "enable_seqscan",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of sequential-scan plans."
+        },
+        {
+            "param": "enable_sort",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of explicit sort steps."
+        },
+        {
+            "param": "enable_tidscan",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Planner Method Configuration",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables the planner's use of TID scan plans."
+        },
+        {
+            "param": "escape_string_warning",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Version and Platform Compatibility / Previous PostgreSQL Versions",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Warn about backslash escapes in ordinary string literals."
+        },
+        {
+            "param": "event_source",
+            "value": "PostgreSQL",
+            "context": "postmaster",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "STRING",
+            "defaultvalue": "PostgreSQL",
+            "description": "Sets the application name used to identify PostgreSQL messages in the event log."
+        },
+        {
+            "param": "exit_on_error",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Error Handling",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Terminate session on any error."
+        },
+        {
+            "param": "external_pid_file",
+            "context": "postmaster",
+            "category": "File Locations",
+            "vartype": "STRING",
+            "description": "Writes the postmaster PID to the specified file."
+        },
+        {
+            "param": "extra_float_digits",
+            "value": "0",
+            "context": "user",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "INTEGER",
+            "minval": "-15",
+            "maxval": "3",
+            "defaultvalue": "0",
+            "description": "Sets the number of digits displayed for floating-point values.",
+            "extra": "This affects real, double precision, and geometric data types. The parameter value is added to the standard number of digits (FLT_DIG or DBL_DIG as appropriate)."
+        },
+        {
+            "param": "from_collapse_limit",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Other Planner Options",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "2147483647",
+            "defaultvalue": "8",
+            "description": "Sets the FROM-list size beyond which subqueries are not collapsed.",
+            "extra": "The planner will merge subqueries into upper queries if the resulting FROM list would have no more than this many items."
+        },
+        {
+            "param": "fsync",
+            "value": "FALSE",
+            "context": "sighup",
+            "category": "Write-Ahead Log / Settings",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Forces synchronization of updates to disk.",
+            "extra": "The server will use the fsync() system call in several places to make sure that updates are physically written to disk. This insures that a database cluster will recover to a consistent state after an operating system or hardware crash."
+        },
+        {
+            "param": "full_page_writes",
+            "value": "FALSE",
+            "context": "sighup",
+            "category": "Write-Ahead Log / Settings",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Writes full pages to WAL when first modified after a checkpoint.",
+            "extra": "A page write in process during an operating system crash might be only partially written to disk.  During recovery, the row changes stored in WAL are not enough to recover.  This option writes pages when first modified after a checkpoint to WAL so full recovery is possible."
+        },
+        {
+            "param": "geqo",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Query Tuning / Genetic Query Optimizer",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables genetic query optimization.",
+            "extra": "This algorithm attempts to do planning without exhaustive searching."
+        },
+        {
+            "param": "geqo_effort",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Genetic Query Optimizer",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "10",
+            "defaultvalue": "5",
+            "description": "GEQO: effort is used to set the default for other GEQO parameters."
+        },
+        {
+            "param": "geqo_generations",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Genetic Query Optimizer",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "0",
+            "description": "GEQO: number of iterations of the algorithm.",
+            "extra": "Zero selects a suitable default value."
+        },
+        {
+            "param": "geqo_pool_size",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Genetic Query Optimizer",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "0",
+            "description": "GEQO: number of individuals in the population.",
+            "extra": "Zero selects a suitable default value."
+        },
+        {
+            "param": "geqo_seed",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Genetic Query Optimizer",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "1",
+            "defaultvalue": "0",
+            "description": "GEQO: seed for random path selection."
+        },
+        {
+            "param": "geqo_selection_bias",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Genetic Query Optimizer",
+            "vartype": "REAL",
+            "minval": "1.5",
+            "maxval": "2",
+            "defaultvalue": "2",
+            "description": "GEQO: selective pressure within the population."
+        },
+        {
+            "param": "geqo_threshold",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Genetic Query Optimizer",
+            "vartype": "INTEGER",
+            "minval": "2",
+            "maxval": "2147483647",
+            "defaultvalue": "12",
+            "description": "Sets the threshold of FROM items beyond which GEQO is used."
+        },
+        {
+            "param": "gin_fuzzy_search_limit",
+            "value": "0",
+            "context": "user",
+            "category": "Client Connection Defaults / Other Defaults",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "0",
+            "description": "Sets the maximum allowed result for exact search by GIN."
+        },
+        {
+            "param": "hba_file",
+            "context": "postmaster",
+            "category": "File Locations",
+            "vartype": "STRING",
+            "description": "Sets the server's \"hba\" configuration file."
+        },
+        {
+            "param": "hot_standby",
+            "value": "FALSE",
+            "context": "postmaster",
+            "category": "Replication / Standby Servers",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Allows connections and queries during recovery."
+        },
+        {
+            "param": "log_rotation_size",
+            "value": "0",
+            "unit": "kB",
+            "context": "sighup",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2097151",
+            "defaultvalue": "10240",
+            "description": "Automatic log file rotation will occur after N kilobytes."
+        },
+        {
+            "param": "log_statement",
+            "value": "none",
+            "context": "superuser",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "ENUM",
+            "enumvalues": [ "none", "ddl", "mod", "all" ],
+            "defaultvalue": "none",
+            "description": "Sets the type of statements logged."
+        },
+        {
+            "param": "log_statement_stats",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Statistics / Monitoring",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Writes cumulative performance statistics to the server log."
+        },
+        {
+            "param": "log_temp_files",
+            "value": "0",
+            "unit": "kB",
+            "context": "superuser",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "INTEGER",
+            "minval": "-1",
+            "maxval": "2147483647",
+            "defaultvalue": "-1",
+            "description": "Log the use of temporary files larger than this number of kilobytes.",
+            "extra": "Zero logs all files. The default is -1 (turning this feature off)."
+        },
+        {
+            "param": "log_timezone",
+            "value": "GMT",
+            "context": "sighup",
+            "category": "Reporting and Logging / What to Log",
+            "vartype": "STRING",
+            "defaultvalue": "localtime",
+            "description": "Sets the time zone to use in log messages."
+        },
+        {
+            "param": "logging_collector",
+            "value": "FALSE",
+            "context": "postmaster",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Start a subprocess to capture stderr output and/or csvlogs into log files."
+        },
+        {
+            "param": "maintenance_work_mem",
+            "value": "0",
+            "unit": "kB",
+            "context": "user",
+            "category": "Resource Usage / Memory",
+            "vartype": "INTEGER",
+            "minval": "1024",
+            "maxval": "2147483647",
+            "defaultvalue": "16384",
+            "description": "Sets the maximum memory to be used for maintenance operations.",
+            "extra": "This includes operations such as VACUUM and CREATE INDEX."
+        },
+        {
+            "param": "max_connections",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Connection Settings",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "8388607",
+            "defaultvalue": "100",
+            "description": "Sets the maximum number of concurrent connections."
+        },
+        {
+            "param": "max_files_per_process",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Resource Usage / Kernel Resources",
+            "vartype": "INTEGER",
+            "minval": "25",
+            "maxval": "2147483647",
+            "defaultvalue": "1000",
+            "description": "Sets the maximum number of simultaneously open files for each server process."
+        },
+        {
+            "param": "max_locks_per_transaction",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Lock Management",
+            "vartype": "INTEGER",
+            "minval": "10",
+            "maxval": "2147483647",
+            "defaultvalue": "64",
+            "description": "Sets the maximum number of locks per transaction.",
+            "extra": "The shared lock table is sized on the assumption that at most max_locks_per_transaction * max_connections distinct objects will need to be locked at any one time."
+        },
+        {
+            "param": "max_pred_locks_per_transaction",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Lock Management",
+            "vartype": "INTEGER",
+            "minval": "10",
+            "maxval": "2147483647",
+            "defaultvalue": "64",
+            "description": "Sets the maximum number of predicate locks per transaction.",
+            "extra": "The shared predicate lock table is sized on the assumption that at most max_pred_locks_per_transaction * max_connections distinct objects will need to be locked at any one time."
+        },
+        {
+            "param": "max_prepared_transactions",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Resource Usage / Memory",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "8388607",
+            "defaultvalue": "0",
+            "description": "Sets the maximum number of simultaneously prepared transactions."
+        },
+        {
+            "param": "max_stack_depth",
+            "value": "0",
+            "unit": "kB",
+            "context": "superuser",
+            "category": "Resource Usage / Memory",
+            "vartype": "INTEGER",
+            "minval": "100",
+            "maxval": "2147483647",
+            "defaultvalue": "2048",
+            "description": "Sets the maximum stack depth, in kilobytes."
+        },
+        {
+            "param": "max_standby_archive_delay",
+            "value": "0",
+            "unit": "ms",
+            "context": "sighup",
+            "category": "Replication / Standby Servers",
+            "vartype": "INTEGER",
+            "minval": "-1",
+            "maxval": "2147483647",
+            "defaultvalue": "30000",
+            "description": "Sets the maximum delay before canceling queries when a hot standby server is processing archived WAL data."
+        },
+        {
+            "param": "max_standby_streaming_delay",
+            "value": "0",
+            "unit": "ms",
+            "context": "sighup",
+            "category": "Replication / Standby Servers",
+            "vartype": "INTEGER",
+            "minval": "-1",
+            "maxval": "2147483647",
+            "defaultvalue": "30000",
+            "description": "Sets the maximum delay before canceling queries when a hot standby server is processing streamed WAL data."
+        },
+        {
+            "param": "max_wal_senders",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Replication / Sending Servers",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "8388607",
+            "defaultvalue": "0",
+            "description": "Sets the maximum number of simultaneously running WAL sender processes."
+        },
+        {
+            "param": "password_encryption",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Encrypt passwords.",
+            "extra": "When a password is specified in CREATE USER or ALTER USER without writing either ENCRYPTED or UNENCRYPTED, this parameter determines whether the password is to be encrypted."
+        },
+        {
+            "param": "port",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Connection Settings",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "65535",
+            "defaultvalue": "5432",
+            "description": "Sets the TCP port the server listens on."
+        },
+        {
+            "param": "quote_all_identifiers",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Version and Platform Compatibility / Previous PostgreSQL Versions",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "When generating SQL fragments, quote all identifiers."
+        },
+        {
+            "param": "random_page_cost",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Planner Cost Constants",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "1.79769e+308",
+            "defaultvalue": "4",
+            "description": "Sets the planner's estimate of the cost of a nonsequentially fetched disk page."
+        },
+        {
+            "param": "restart_after_crash",
+            "value": "FALSE",
+            "context": "sighup",
+            "category": "Error Handling",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Reinitialize server after backend crash."
+        },
+        {
+            "param": "search_path",
+            "value": "\"$user\",public",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "STRING",
+            "defaultvalue": "\"$user\",public",
+            "description": "Sets the schema search order for names that are not schema-qualified."
+        },
+        {
+            "param": "seq_page_cost",
+            "value": "0",
+            "context": "user",
+            "category": "Query Tuning / Planner Cost Constants",
+            "vartype": "REAL",
+            "minval": "0",
+            "maxval": "1.79769e+308",
+            "defaultvalue": "1",
+            "description": "Sets the planner's estimate of the cost of a sequentially fetched disk page."
+        },
+        {
+            "param": "session_replication_role",
+            "value": "origin",
+            "context": "superuser",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "ENUM",
+            "enumvalues": [ "origin", "replica", "local" ],
+            "defaultvalue": "origin",
+            "description": "Sets the session's behavior for triggers and rewrite rules."
+        },
+        {
+            "param": "shared_buffers",
+            "value": "0",
+            "unit": "8kB",
+            "context": "postmaster",
+            "category": "Resource Usage / Memory",
+            "vartype": "INTEGER",
+            "minval": "16",
+            "maxval": "1073741823",
+            "defaultvalue": "16384",
+            "description": "Sets the number of shared memory buffers used by the server."
+        },
+        {
+            "param": "shared_preload_libraries",
+            "context": "postmaster",
+            "category": "Resource Usage / Kernel Resources",
+            "vartype": "STRING",
+            "description": "Lists shared libraries to preload into server."
+        },
+        {
+            "param": "sql_inheritance",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Version and Platform Compatibility / Previous PostgreSQL Versions",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Causes subtables to be included by default in various commands."
+        },
+        {
+            "param": "ssl",
+            "value": "FALSE",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enables SSL connections."
+        },
+        {
+            "param": "ssl_ca_file",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "STRING",
+            "description": "Location of the SSL certificate authority file."
+        },
+        {
+            "param": "ssl_cert_file",
+            "value": "server.crt",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "STRING",
+            "defaultvalue": "/etc/ssl/certs/ssl-cert-snakeoil.pem",
+            "description": "Location of the SSL server certificate file."
+        },
+        {
+            "param": "ssl_ciphers",
+            "value": "DEFAULT:!LOW:!EXP:!MD5:@STRENGTH",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "STRING",
+            "description": "Sets the list of allowed SSL ciphers."
+        },
+        {
+            "param": "ssl_crl_file",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "STRING",
+            "description": "Location of the SSL certificate revocation list file."
+        },
+        {
+            "param": "ssl_key_file",
+            "value": "server.key",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "STRING",
+            "defaultvalue": "/etc/ssl/private/ssl-cert-snakeoil.key",
+            "description": "Location of the SSL server private key file."
+        },
+        {
+            "param": "ssl_renegotiation_limit",
+            "value": "0",
+            "unit": "kB",
+            "context": "user",
+            "category": "Connections and Authentication / Security and Authentication",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "524288",
+            "description": "Set the amount of traffic to send and receive before renegotiating the encryption keys."
+        },
+        {
+            "param": "standard_conforming_strings",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Version and Platform Compatibility / Previous PostgreSQL Versions",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Causes '...' strings to treat backslashes literally."
+        },
+        {
+            "param": "statement_timeout",
+            "value": "0",
+            "unit": "ms",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "0",
+            "description": "Sets the maximum allowed duration of any statement.",
+            "extra": "A value of 0 turns off the timeout."
+        },
+        {
+            "param": "stats_temp_directory",
+            "value": "pg_stat_tmp",
+            "context": "sighup",
+            "category": "Statistics / Query and Index Statistics Collector",
+            "vartype": "STRING",
+            "description": "Writes temporary statistics files to the specified directory."
+        },
+        {
+            "param": "superuser_reserved_connections",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Connection Settings",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "8388607",
+            "defaultvalue": "3",
+            "description": "Sets the number of connection slots reserved for superusers."
+        },
+        {
+            "param": "synchronize_seqscans",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Version and Platform Compatibility / Previous PostgreSQL Versions",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Enable synchronized sequential scans."
+        },
+        {
+            "param": "synchronous_commit",
+            "value": "on",
+            "context": "user",
+            "category": "Write-Ahead Log / Settings",
+            "vartype": "ENUM",
+            "enumvalues": [ "local", "remote_write", "on", "off" ],
+            "defaultvalue": "on",
+            "description": "Sets the current transaction's synchronization level."
+        },
+        {
+            "param": "synchronous_standby_names",
+            "context": "sighup",
+            "category": "Replication / Master Server",
+            "vartype": "STRING",
+            "description": "List of names of potential synchronous standbys."
+        },
+        {
+            "param": "syslog_facility",
+            "value": "local0",
+            "context": "sighup",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "ENUM",
+            "enumvalues": [ "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7" ],
+            "defaultvalue": "local0",
+            "description": "Sets the syslog \"facility\" to be used when syslog enabled."
+        },
+        {
+            "param": "syslog_ident",
+            "value": "postgres",
+            "context": "sighup",
+            "category": "Reporting and Logging / Where to Log",
+            "vartype": "STRING",
+            "defaultvalue": "postgres",
+            "description": "Sets the program name used to identify PostgreSQL messages in syslog."
+        },
+        {
+            "param": "tcp_keepalives_count",
+            "value": "0",
+            "context": "user",
+            "category": "Client Connection Defaults / Other Defaults",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "0",
+            "description": "Maximum number of TCP keepalive retransmits.",
+            "extra": "This controls the number of consecutive keepalive retransmits that can be lost before a connection is considered dead. A value of 0 uses the system default."
+        },
+        {
+            "param": "tcp_keepalives_idle",
+            "value": "0",
+            "unit": "s",
+            "context": "user",
+            "category": "Client Connection Defaults / Other Defaults",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "0",
+            "description": "Time between issuing TCP keepalives.",
+            "extra": "A value of 0 uses the system default."
+        },
+        {
+            "param": "tcp_keepalives_interval",
+            "value": "0",
+            "unit": "s",
+            "context": "user",
+            "category": "Client Connection Defaults / Other Defaults",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "0",
+            "description": "Time between TCP keepalive retransmits.",
+            "extra": "A value of 0 uses the system default."
+        },
+        {
+            "param": "temp_buffers",
+            "value": "0",
+            "unit": "8kB",
+            "context": "user",
+            "category": "Resource Usage / Memory",
+            "vartype": "INTEGER",
+            "minval": "100",
+            "maxval": "1073741823",
+            "defaultvalue": "1024",
+            "description": "Sets the maximum number of temporary buffers used by each session."
+        },
+        {
+            "param": "temp_file_limit",
+            "value": "0",
+            "unit": "kB",
+            "context": "superuser",
+            "category": "Resource Usage / Disk",
+            "vartype": "INTEGER",
+            "minval": "-1",
+            "maxval": "2147483647",
+            "defaultvalue": "-1",
+            "description": "Limits the total size of all temporary files used by each session.",
+            "extra": "-1 means no limit."
+        },
+        {
+            "param": "temp_tablespaces",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "STRING",
+            "description": "Sets the tablespace(s) to use for temporary tables and sort files."
+        },
+        {
+            "param": "TimeZone",
+            "value": "GMT",
+            "context": "user",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "STRING",
+            "defaultvalue": "localtime",
+            "description": "Sets the time zone for displaying and interpreting time stamps."
+        },
+        {
+            "param": "timezone_abbreviations",
+            "context": "user",
+            "category": "Client Connection Defaults / Locale and Formatting",
+            "vartype": "STRING",
+            "defaultvalue": "Default",
+            "description": "Selects a file of time zone abbreviations."
+        },
+        {
+            "param": "trace_recovery_messages",
+            "value": "log",
+            "context": "sighup",
+            "category": "Developer Options",
+            "vartype": "ENUM",
+            "enumvalues": [ "debug5", "debug4", "debug3", "debug2", "debug1", "log", "notice", "warning", "error" ],
+            "defaultvalue": "log",
+            "description": "Enables logging of recovery-related debugging information.",
+            "extra": "Each level includes all the levels that follow it. The later the level, the fewer messages are sent."
+        },
+        {
+            "param": "track_activities",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Statistics / Query and Index Statistics Collector",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Collects information about executing commands.",
+            "extra": "Enables the collection of information on the currently executing command of each session, along with the time at which that command began execution."
+        },
+        {
+            "param": "track_activity_query_size",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Resource Usage / Memory",
+            "vartype": "INTEGER",
+            "minval": "100",
+            "maxval": "102400",
+            "defaultvalue": "1024",
+            "description": "Sets the size reserved for pg_stat_activity.query, in bytes."
+        },
+        {
+            "param": "track_counts",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Statistics / Query and Index Statistics Collector",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Collects statistics on database activity."
+        },
+        {
+            "param": "track_functions",
+            "value": "none",
+            "context": "superuser",
+            "category": "Statistics / Query and Index Statistics Collector",
+            "vartype": "ENUM",
+            "enumvalues": [ "none", "pl", "all" ],
+            "defaultvalue": "none",
+            "description": "Collects function-level statistics on database activity."
+        },
+        {
+            "param": "track_io_timing",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Statistics / Query and Index Statistics Collector",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Collects timing statistics for database I/O activity."
+        },
+        {
+            "param": "transform_null_equals",
+            "value": "FALSE",
+            "context": "user",
+            "category": "Version and Platform Compatibility / Other Platforms and Clients",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "off",
+            "description": "Treats \"expr=NULL\" as \"expr IS NULL\".",
+            "extra": "When turned on, expressions of the form expr = NULL (or NULL = expr) are treated as expr IS NULL, that is, they return true if expr evaluates to the null value, and false otherwise. The correct behavior of expr = NULL is to always return null (unknown)."
+        },
+        {
+            "param": "unix_socket_directories",
+            "value": "/var/run/postgresql",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Connection Settings",
+            "vartype": "STRING",
+            "description": "Sets the directories where Unix-domain sockets will be created."
+        },
+        {
+            "param": "unix_socket_group",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Connection Settings",
+            "vartype": "STRING",
+            "description": "Sets the owning group of the Unix-domain socket.",
+            "extra": "The owning user of the socket is always the user that starts the server."
+        },
+        {
+            "param": "unix_socket_permissions",
+            "value": "0",
+            "context": "postmaster",
+            "category": "Connections and Authentication / Connection Settings",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "511",
+            "defaultvalue": "511",
+            "description": "Sets the access permissions of the Unix-domain socket.",
+            "extra": "Unix-domain sockets use the usual Unix file system permission set. The parameter value is expected to be a numeric mode specification in the form accepted by the chmod and umask system calls. (To use the customary octal format the number must start with a 0 (zero).)"
+        },
+        {
+            "param": "update_process_title",
+            "value": "FALSE",
+            "context": "superuser",
+            "category": "Statistics / Query and Index Statistics Collector",
+            "vartype": "BOOLEAN",
+            "defaultvalue": "on",
+            "description": "Updates the process title to show the active SQL command.",
+            "extra": "Enables updating of the process title every time a new SQL command is received by the server."
+        },
+        {
+            "param": "vacuum_cost_delay",
+            "value": "0",
+            "unit": "ms",
+            "context": "user",
+            "category": "Resource Usage / Cost-Based Vacuum Delay",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "100",
+            "defaultvalue": "0",
+            "description": "Vacuum cost delay in milliseconds."
+        },
+        {
+            "param": "vacuum_cost_limit",
+            "value": "0",
+            "context": "user",
+            "category": "Resource Usage / Cost-Based Vacuum Delay",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "10000",
+            "defaultvalue": "200",
+            "description": "Vacuum cost amount available before napping."
+        },
+        {
+            "param": "vacuum_cost_page_dirty",
+            "value": "0",
+            "context": "user",
+            "category": "Resource Usage / Cost-Based Vacuum Delay",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "10000",
+            "defaultvalue": "20",
+            "description": "Vacuum cost for a page dirtied by vacuum."
+        },
+        {
+            "param": "vacuum_cost_page_hit",
+            "value": "0",
+            "context": "user",
+            "category": "Resource Usage / Cost-Based Vacuum Delay",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "10000",
+            "defaultvalue": "1",
+            "description": "Vacuum cost for a page found in the buffer cache."
+        },
+        {
+            "param": "vacuum_cost_page_miss",
+            "value": "0",
+            "context": "user",
+            "category": "Resource Usage / Cost-Based Vacuum Delay",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "10000",
+            "defaultvalue": "10",
+            "description": "Vacuum cost for a page not found in the buffer cache."
+        },
+        {
+            "param": "vacuum_defer_cleanup_age",
+            "value": "0",
+            "context": "sighup",
+            "category": "Replication / Master Server",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "1000000",
+            "defaultvalue": "0",
+            "description": "Number of transactions by which VACUUM and HOT cleanup should be deferred, if any."
+        },
+        {
+            "param": "vacuum_freeze_min_age",
+            "value": "0",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "1000000000",
+            "defaultvalue": "50000000",
+            "description": "Minimum age at which VACUUM should freeze a table row."
+        },
+        {
+            "param": "vacuum_freeze_table_age",
+            "value": "0",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2000000000",
+            "defaultvalue": "150000000",
+            "description": "Age at which VACUUM should scan whole table to freeze tuples."
+        },
+        {
+            "param": "wal_buffers",
+            "value": "0",
+            "unit": "8kB",
+            "context": "postmaster",
+            "category": "Write-Ahead Log / Settings",
+            "vartype": "INTEGER",
+            "minval": "-1",
+            "maxval": "2147483647",
+            "defaultvalue": "512",
+            "description": "Sets the number of disk-page buffers in shared memory for WAL."
+        },
+        {
+            "param": "wal_keep_segments",
+            "value": "0",
+            "context": "sighup",
+            "category": "Replication / Sending Servers",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "0",
+            "description": "Sets the number of WAL files held for standby servers."
+        },
+        {
+            "param": "wal_level",
+            "value": "minimal",
+            "context": "postmaster",
+            "category": "Write-Ahead Log / Settings",
+            "vartype": "ENUM",
+            "enumvalues": [ "minimal", "archive", "hot_standby" ],
+            "defaultvalue": "minimal",
+            "description": "Set the level of information written to the WAL."
+        },
+        {
+            "param": "wal_receiver_status_interval",
+            "value": "0",
+            "unit": "s",
+            "context": "sighup",
+            "category": "Replication / Standby Servers",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483",
+            "defaultvalue": "10",
+            "description": "Sets the maximum interval between WAL receiver status reports to the primary."
+        },
+        {
+            "param": "wal_receiver_timeout",
+            "value": "0",
+            "unit": "ms",
+            "context": "sighup",
+            "category": "Replication / Standby Servers",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "60000",
+            "description": "Sets the maximum wait time to receive data from the primary."
+        },
+        {
+            "param": "wal_sender_timeout",
+            "value": "0",
+            "unit": "ms",
+            "context": "sighup",
+            "category": "Replication / Sending Servers",
+            "vartype": "INTEGER",
+            "minval": "0",
+            "maxval": "2147483647",
+            "defaultvalue": "60000",
+            "description": "Sets the maximum time to wait for WAL replication."
+        },
+        {
+            "param": "wal_sync_method",
+            "value": "fdatasync",
+            "context": "sighup",
+            "category": "Write-Ahead Log / Settings",
+            "vartype": "ENUM",
+            "enumvalues": [ "fsync", "fdatasync", "open_sync" ],
+            "defaultvalue": "fdatasync",
+            "description": "Selects the method used for forcing WAL updates to disk."
+        },
+        {
+            "param": "wal_writer_delay",
+            "value": "0",
+            "unit": "ms",
+            "context": "sighup",
+            "category": "Write-Ahead Log / Settings",
+            "vartype": "INTEGER",
+            "minval": "1",
+            "maxval": "10000",
+            "defaultvalue": "200",
+            "description": "WAL writer sleep time between WAL flushes."
+        },
+        {
+            "param": "work_mem",
+            "value": "0",
+            "unit": "kB",
+            "context": "user",
+            "category": "Resource Usage / Memory",
+            "vartype": "INTEGER",
+            "minval": "64",
+            "maxval": "2147483647",
+            "defaultvalue": "1024",
+            "description": "Sets the maximum memory to be used for query workspaces.",
+            "extra": "This much memory can be used by each internal sort operation and hash table before switching to temporary disk files."
+        },
+        {
+            "param": "xmlbinary",
+            "value": "base64",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "ENUM",
+            "enumvalues": [ "base64", "hex" ],
+            "defaultvalue": "base64",
+            "description": "Sets how binary values are to be encoded in XML."
+        },
+        {
+            "param": "xmloption",
+            "value": "content",
+            "context": "user",
+            "category": "Client Connection Defaults / Statement Behavior",
+            "vartype": "ENUM",
+            "enumvalues": [ "content", "document" ],
+            "defaultvalue": "content",
+            "description": "Sets whether XML data in implicit parsing and serialization operations is to be considered as documents or content fragments."
+        }
+    ]
+}
