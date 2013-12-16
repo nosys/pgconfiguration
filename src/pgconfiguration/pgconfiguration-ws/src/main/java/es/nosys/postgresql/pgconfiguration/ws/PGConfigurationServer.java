@@ -4,10 +4,8 @@
 
 package es.nosys.postgresql.pgconfiguration.ws;
 
-import es.nosys.postgresql.pgconfiguration.model.Configuration;
-import es.nosys.postgresql.pgconfiguration.ws.resources.GetParam;
+import es.nosys.postgresql.pgconfiguration.ws.resources.GetSetParam;
 import net.jcip.annotations.NotThreadSafe;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -16,8 +14,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 
 /**
@@ -28,18 +24,9 @@ import java.nio.file.Path;
 @NotThreadSafe      // Exports object (PGConfiguration) which may be mutated externally in an unsafe manner
 public class PGConfigurationServer {
     private final Path pgData;
-    private final Configuration configuration;
 
     public PGConfigurationServer(Path pgData) {
         this.pgData = pgData;
-
-        InputStream is = PGConfigurationServer.class.getClassLoader().getResourceAsStream("pgconfiguration.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            configuration = objectMapper.readValue(is, Configuration.class);
-        } catch (IOException e) {
-            throw new RuntimeException("Error reading the included pgconfiguration.json resource", e);
-        }
     }
 
     public void run() throws Exception {
@@ -59,8 +46,8 @@ public class PGConfigurationServer {
                 .packages("org.glassfish.jersey.examples.jackson")          // Register Jackson
                 .register(JacksonFeature.class)
                 .register(ObjectMapperResolver.class)
-                .register(new PGConfiguration(pgData, configuration))       // Manually inject dependency
-                .packages(GetParam.class.getPackage().getName());           // Register WS resources
+                .register(new PGConfiguration(pgData))       // Manually inject dependency
+                .packages(GetSetParam.class.getPackage().getName());           // Register WS resources
         servletContextHandler.addServlet(new ServletHolder(new ServletContainer(rc)), "/*");
 
         // Launch server and join it to the main thread

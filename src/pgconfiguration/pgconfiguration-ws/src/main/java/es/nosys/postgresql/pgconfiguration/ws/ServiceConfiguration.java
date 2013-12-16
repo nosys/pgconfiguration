@@ -17,8 +17,8 @@ public final class ServiceConfiguration {
     public static final String POSTGRESQL_CONF = "postgresql.conf";
     public static final String POSTGRESQL_JSON = "postgresql.json";
 
-    public static final String WS_PATH = "/resources" + "/" + POSTGRESQL_CONF;
-    public static final String WS_GETPARAM_PATH = "/{param}";
+    public static final String WS_PATH = "/ws" + "/" + POSTGRESQL_CONF;
+    public static final String WS_PARAM_PATH = "/{param}";
 
     private ServiceConfiguration() {}
 }
