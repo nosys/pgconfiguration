@@ -22,7 +22,7 @@ import java.io.IOException;
  *
  * @author Álvaro Hernández Tortosa <aht@nosys.es>
  */
-@Path(ServiceConfiguration.WS_PATH)
+@Path(ServiceConfiguration.WS_FILENAME_PATH)
 public class GetSetParam {
     @Inject
     PGConfiguration pgConfiguration;
@@ -30,7 +30,7 @@ public class GetSetParam {
     @GET
     @Path(ServiceConfiguration.WS_PARAM_PATH)
     @Produces(MediaType.APPLICATION_JSON)
-    public Param param(@PathParam("param") String param) {
+    public Param get(@PathParam("param") String param) {
        return pgConfiguration.getParamByName(param);
     }
 

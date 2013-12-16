@@ -4,7 +4,7 @@
 
 package es.nosys.postgresql.pgconfiguration.ws;
 
-import es.nosys.postgresql.pgconfiguration.ws.resources.GetSetParam;
+import es.nosys.postgresql.pgconfiguration.ws.resources.*;
 import net.jcip.annotations.NotThreadSafe;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -46,8 +46,12 @@ public class PGConfigurationServer {
                 .packages("org.glassfish.jersey.examples.jackson")          // Register Jackson
                 .register(JacksonFeature.class)
                 .register(ObjectMapperResolver.class)
-                .register(new PGConfiguration(pgData))       // Manually inject dependency
-                .packages(GetSetParam.class.getPackage().getName());           // Register WS resources
+                .register(new PGConfiguration(pgData))      // Manually inject dependency
+                .register(FileOperations.class)             // Register each WS class individually
+                .register(GetSetParam.class)
+                .register(ParamsInfo.class)
+                .register(RootIndex.class)
+                .register(FilenameIndex.class);
         servletContextHandler.addServlet(new ServletHolder(new ServletContainer(rc)), "/*");
 
         // Launch server and join it to the main thread

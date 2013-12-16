@@ -16,14 +16,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -33,9 +29,10 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Álvaro Hernández Tortosa <aht@nosys.es>
  */
 @NotThreadSafe
-@Path(ServiceConfiguration.WS_PATH)
+@Path(ServiceConfiguration.WS_FILENAME_PATH)
 public class PGConfiguration {
     private static final String PGCONFIGURATION_JSON_JAR_RESOURCE = "pgconfiguration.json";
+    private static final String POSTGRESQL_CONF_HEADER_JAR_RESOURCE = "postgresql.conf.header";
 
     private final Logger logger = LoggerFactory.getLogger(PGConfiguration.class);
 
@@ -106,42 +103,14 @@ public class PGConfiguration {
         return configuration;
     }
 
-    private String getTempPersistFileName() {
-        return ServiceConfiguration.POSTGRESQL_JSON + "." + ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
-    }
-
-    private File getTempPersistFile() {
-        return pgData.resolve(getTempPersistFileName()).toFile();
-    }
-
     private void persist(Configuration configuration) throws IOException {
+        File tempFile = pgData.resolve(FileUtils.getTempPersistFileName(ServiceConfiguration.POSTGRESQL_JSON)).toFile();
         ObjectMapper mapper = new ObjectMapperResolver().getContext(Configuration.class);
-        File tempFile = getTempPersistFile();
         mapper.writeValue(tempFile, configuration);
 
-        persistLock.lock();
-        try {
-            try {
-                Files.move(
-                        tempFile.toPath(), pgData.resolve(ServiceConfiguration.POSTGRESQL_JSON),
-                        StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING
-                );
-            } catch(IOException e) {
-                logger.error("Error persisting the " + ServiceConfiguration.POSTGRESQL_JSON + " file", e);
-                throw e;
-            } finally {
-                if(tempFile.exists()) {
-                    try {
-                        Files.delete(tempFile.toPath());
-                    } catch(IOException e) {
-                        logger.error("Cannot delete temp file " + tempFile.getName(), e);
-                        throw e;
-                    }
-                }
-            }
-        } finally {
-            persistLock.unlock();
-        }
+        FileUtils.moveFileAtomically(
+                persistLock, tempFile.toPath(), pgData.resolve(ServiceConfiguration.POSTGRESQL_JSON)
+        );
     }
 
     public void persist() throws IOException {
@@ -149,9 +118,13 @@ public class PGConfiguration {
     }
 
     @GET @Path("/pgdata")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public String getPGData() {
         return pgData.toAbsolutePath().toString();
+    }
+
+    public java.nio.file.Path getPGDataAsPath() {
+        return pgData;
     }
 
     public Param getParamByName(String name) {
@@ -167,16 +140,15 @@ public class PGConfiguration {
         return postgresqlconfparamsByCategory.keySet();
     }
 
-    public String[] getParamsByCategory(String category) {
+    public Set<String> getParamsByCategory(String category) {
         if(category == null || ! postgresqlconfparamsByCategory.containsKey(category)) {
             return null;
         }
 
         List<Param> params = postgresqlconfparamsByCategory.get(category);
-        String[] paramNames = new String[params.size()];
-        int i = 0;
+        Set<String> paramNames = new TreeSet<String>();
         for(Param param : params) {
-            paramNames[i++] = param.getParam();
+            paramNames.add(param.getParam());
         }
 
         return paramNames;
@@ -200,5 +172,35 @@ public class PGConfiguration {
         persist();
 
         return p;
+    }
+
+    public String toKeyValueFile() {
+        StringBuilder sb = new StringBuilder();
+
+        // Write postgresql.conf header
+        try(
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        PGConfiguration.class.getClassLoader().getResourceAsStream(POSTGRESQL_CONF_HEADER_JAR_RESOURCE)
+                ))
+        ) {
+            String line;
+            while((line = reader.readLine()) != null) {
+                sb.append(line);
+                sb.append("\n");
+            }
+        } catch (IOException ex) {
+            logger.error("Unable to read from internal resource " + POSTGRESQL_CONF_HEADER_JAR_RESOURCE);
+            // Continue writing the file
+        }
+
+        // Write parameters
+        for(Map.Entry<String,List<Param>> entry : postgresqlconfparamsByCategory.entrySet()) {
+            sb.append("\n# " + entry.getKey() + "\n");
+            for(Param param : entry.getValue()) {
+                sb.append(param.getParam() + " = " + param.getValue() + "\n");
+            }
+        }
+
+        return sb.toString();
     }
 }
