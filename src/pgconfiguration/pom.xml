@@ -13,6 +13,7 @@
     <modules>
         <module>pgconfiguration-model</module>
         <module>pgconfiguration-ws</module>
+        <module>pgconfiguration-webapp</module>
     </modules>
 
 </project>
