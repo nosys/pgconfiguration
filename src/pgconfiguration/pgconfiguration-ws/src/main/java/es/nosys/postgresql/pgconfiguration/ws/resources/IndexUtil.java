@@ -17,7 +17,7 @@ public class IndexUtil {
 
         return new String[] {
                 WS_PATH, basePath + WS_PARAMS_PATH, basePath + WS_CATEGORIES_PATH, basePath + WS_PARAM_PATH,
-                basePath + WS_DUMP_PATH, basePath + WS_SAVE_PATH
+                basePath + WS_DUMP_PATH, basePath + WS_SAVE_PATH, basePath + WS_SEARCH_PATH
         };
     }
 }

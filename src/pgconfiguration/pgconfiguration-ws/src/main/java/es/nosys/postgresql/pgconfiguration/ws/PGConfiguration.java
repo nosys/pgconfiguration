@@ -32,7 +32,6 @@ import java.util.concurrent.locks.ReentrantLock;
 @Path(ServiceConfiguration.WS_FILENAME_PATH)
 public class PGConfiguration {
     private static final String PGCONFIGURATION_JSON_JAR_RESOURCE = "pgconfiguration.json";
-    private static final String POSTGRESQL_CONF_HEADER_JAR_RESOURCE = "postgresql.conf.header";
 
     private final Logger logger = LoggerFactory.getLogger(PGConfiguration.class);
 
@@ -140,71 +139,15 @@ public class PGConfiguration {
         return postgresqlconfparamsByCategory.keySet();
     }
 
-    public Set<String> getParamsByCategory(String category) {
-        if(category == null || ! postgresqlconfparamsByCategory.containsKey(category)) {
-            return null;
-        }
-
-        List<Param> params = postgresqlconfparamsByCategory.get(category);
-        Set<String> paramNames = new TreeSet<String>();
-        for(Param param : params) {
-            paramNames.add(param.getParam());
-        }
-
-        return paramNames;
-    }
-
-    /**
-     *
-     * @param param
-     * @param value
-     * @return The old value
-     * @throws java.io.IOException If there is a problem persisting the configuration file
-     */
-    // TODO: add param validation
-    public Param setParam(String param, String value) throws IOException {
-        Param p = getParamByName(param);
-        if(null == p) {
-            return null;
-        }
-        p.setValue(value);
-
-        persist();
-
-        return p;
-    }
-
-    public String toKeyValueFile() {
-        StringBuilder sb = new StringBuilder();
-
-        // Write postgresql.conf header
-        try(
-                BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        PGConfiguration.class.getClassLoader().getResourceAsStream(POSTGRESQL_CONF_HEADER_JAR_RESOURCE)
-                ))
-        ) {
-            String line;
-            while((line = reader.readLine()) != null) {
-                sb.append(line);
-                sb.append("\n");
-            }
-        } catch (IOException ex) {
-            logger.error("Unable to read from internal resource " + POSTGRESQL_CONF_HEADER_JAR_RESOURCE);
-            // Continue writing the file
-        }
-
-        // Write parameters
-        for(Map.Entry<String,List<Param>> entry : postgresqlconfparamsByCategory.entrySet()) {
-            sb.append("\n# " + entry.getKey() + "\n");
-            for(Param param : entry.getValue()) {
-                sb.append(param.getParam() + " = " + param.getValue() + "\n");
-            }
-        }
-
-        return sb.toString();
-    }
-
     public Collection<Param> getPostgresqlconfParams() {
         return postgresqlconfParamByName.values();
+    }
+
+    public Map<String, Param> getPostgresqlconfParamByName() {
+        return postgresqlconfParamByName;
+    }
+
+    public Map<String, List<Param>> getPostgresqlconfparamsByCategory() {
+        return postgresqlconfparamsByCategory;
     }
 }

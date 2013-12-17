@@ -41,7 +41,7 @@ public class GetSetParam {
     public Param set(@PathParam("param") String param, String value, @Context final HttpServletResponse response)
     throws IOException {
         try {
-            return pgConfiguration.setParam(param, value);
+            return setParam(param, value);
         } catch (IOException e) {
             response.sendError(
                     Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
@@ -50,5 +50,25 @@ public class GetSetParam {
 
             return null;
         }
+    }
+
+    /**
+     *
+     * @param param
+     * @param value
+     * @return The old value
+     * @throws java.io.IOException If there is a problem persisting the configuration file
+     */
+    // TODO: add param validation
+    private Param setParam(String param, String value) throws IOException {
+        Param p = pgConfiguration.getParamByName(param);
+        if(null == p) {
+            return null;
+        }
+        p.setValue(value);
+
+        pgConfiguration.persist();
+
+        return p;
     }
 }
