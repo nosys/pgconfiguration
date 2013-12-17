@@ -4,6 +4,9 @@
 
 package es.nosys.postgresql.pgconfiguration.ws;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +17,8 @@ import java.nio.file.Paths;
  * @author Álvaro Hernández Tortosa <aht@nosys.es>
  */
 public class Main {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+
     private static void usage() {
         System.err.println("\nUsage:\tjava -jar <pgconfiguration-resources-x.yz.jar> [PGDATA]\n");
         System.err.println("PGDATA is the (relative or absolute) directory containing the postgresql.conf file");
@@ -48,7 +53,9 @@ public class Main {
         try {
             pgConfigurationServer.run();
         } catch (Exception e) {
-            System.err.println("Server failed to start. Check the logs for more information");
+            String errorMessage = "Server failed to start. Check the logs for more information";
+            LOGGER.error(errorMessage, e);
+            System.err.println(errorMessage);
             System.exit(1);
         }
     }

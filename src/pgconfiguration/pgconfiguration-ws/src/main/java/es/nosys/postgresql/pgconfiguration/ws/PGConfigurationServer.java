@@ -6,7 +6,11 @@ package es.nosys.postgresql.pgconfiguration.ws;
 
 import es.nosys.postgresql.pgconfiguration.ws.resources.*;
 import net.jcip.annotations.NotThreadSafe;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -32,9 +36,17 @@ public class PGConfigurationServer {
     public void run() throws Exception {
         Server server = new Server(ServiceConfiguration.DEFAULT_PORT);
 
-        // Configure servlet environment
-        ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
-        server.setHandler(servletContextHandler);
+        // Servlet environment
+        ServletContextHandler servletHandler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
+
+        // Static content
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setResourceBase(
+                getClass().getClassLoader().getResource(ServiceConfiguration.WEBAPP_FOLDER).toExternalForm()
+        );
+        resourceHandler.setWelcomeFiles(new String[] { ServiceConfiguration.WELCOME_FILE });
+
+        // REST web services (jersey)
 
         // Jersey uses java.util.logging - bridge to slf4
         // http://blog.cn-consult.dk/2009/03/bridging-javautillogging-to-slf4j.html
@@ -53,7 +65,12 @@ public class PGConfigurationServer {
                 .register(RootIndex.class)
                 .register(FilenameIndex.class)
                 .register(Search.class);
-        servletContextHandler.addServlet(new ServletHolder(new ServletContainer(rc)), "/*");
+        servletHandler.addServlet(new ServletHolder(new ServletContainer(rc)), ServiceConfiguration.WS_PATH + "/*");
+
+        // Setup server handlers
+        HandlerList handlers = new HandlerList();
+        handlers.setHandlers(new Handler[] { resourceHandler, servletHandler, new DefaultHandler() });
+        server.setHandler(handlers);
 
         // Launch server and join it to the main thread
         server.start();

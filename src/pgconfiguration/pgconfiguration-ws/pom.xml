@@ -67,6 +67,11 @@
             <artifactId>jcip-annotations</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>es.nosys.postgresql</groupId>
+            <artifactId>pgconfiguration-webapp</artifactId>
+            <version>0.10</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -112,7 +117,10 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>es.nosys.postgresql.pgconfiguration.ws.Main</mainClass>
+                                    <manifestEntries>
+                                        <Main-Class>es.nosys.postgresql.pgconfiguration.ws.Main</Main-Class>
+                                        <!-- <Class-Path>webapp</Class-Path> -->
+                                    </manifestEntries>
                                 </transformer>
                             </transformers>
                         </configuration>
