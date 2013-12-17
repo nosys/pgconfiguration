@@ -20,6 +20,8 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -66,8 +68,15 @@ public class FileOperations {
             pw.write(postgresqlConf);
         }
 
-        FileUtils.moveFileAtomically(
-                PERSIST_LOCK, tempFile.toPath(), pgData.resolve(ServiceConfiguration.POSTGRESQL_CONF)
+        java.nio.file.Path postgresqlConfPath = pgData.resolve(ServiceConfiguration.POSTGRESQL_CONF);
+        java.nio.file.Path postgresqlConfBackupPath = pgData.resolve(
+                ServiceConfiguration.POSTGRESQL_CONF + "." + new SimpleDateFormat("yyyyMMdd.HHmmss").format(new Date())
         );
+
+        // Save a copy of the curren postgresqlconf file
+        FileUtils.moveFileAtomically(PERSIST_LOCK, postgresqlConfPath, postgresqlConfBackupPath);
+
+        // Move the new file to the final path name
+        FileUtils.moveFileAtomically(PERSIST_LOCK, tempFile.toPath(), postgresqlConfPath);
     }
 }

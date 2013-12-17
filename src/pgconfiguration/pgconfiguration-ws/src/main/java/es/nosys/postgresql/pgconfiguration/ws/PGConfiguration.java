@@ -203,4 +203,8 @@ public class PGConfiguration {
 
         return sb.toString();
     }
+
+    public Collection<Param> getPostgresqlconfParams() {
+        return postgresqlconfParamByName.values();
+    }
 }

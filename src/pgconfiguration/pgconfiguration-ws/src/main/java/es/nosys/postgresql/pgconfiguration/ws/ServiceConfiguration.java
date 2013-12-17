@@ -25,6 +25,7 @@ public final class ServiceConfiguration {
     public static final String WS_CATEGORIES_PATH = "/categories";
     public static final String WS_DUMP_PATH = "/dump";
     public static final String WS_SAVE_PATH = "/save";
+    public static final String WS_SEARCH_PATH = "/search/{searchstring}";
 
     private ServiceConfiguration() {}
 }

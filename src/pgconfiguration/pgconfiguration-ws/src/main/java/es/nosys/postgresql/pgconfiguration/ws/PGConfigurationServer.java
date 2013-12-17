@@ -51,7 +51,8 @@ public class PGConfigurationServer {
                 .register(GetSetParam.class)
                 .register(ParamsInfo.class)
                 .register(RootIndex.class)
-                .register(FilenameIndex.class);
+                .register(FilenameIndex.class)
+                .register(Search.class);
         servletContextHandler.addServlet(new ServletHolder(new ServletContainer(rc)), "/*");
 
         // Launch server and join it to the main thread
