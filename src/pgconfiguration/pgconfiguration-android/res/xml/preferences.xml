@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory 
+        android:title="@string/pref_server">
+	<!--
+	    <EditTextPreference
+	        android:key="pref_add_server"
+	        android:title="@string/pref_add_server"
+	        android:defaultValue="@string/default_pref_server" />
+	    <ListPreference
+	        android:key="pref_server_list"
+	        android:title="@string/pref_chose_server"
+	        android:dialogTitle="@string/pref_chose_server"
+	        android:entries="@array/default_pref_chose_server"
+	        android:entryValues="@array/default_pref_chose_server" />
+	-->
+	    <EditTextPreference
+	        android:key="pref_server"
+	        android:title="@string/pref_server"
+	        android:defaultValue="@string/default_pref_server" />
+	    <EditTextPreference
+	        android:key="pref_filename"
+	        android:title="@string/pref_filename"
+	        android:defaultValue="@string/default_pref_filename" />
+    </PreferenceCategory>
+</PreferenceScreen>
